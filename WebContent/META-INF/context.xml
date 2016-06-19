@@ -1,0 +1,10 @@
+<Context>
+
+  <Resource name="jdbc/my_contacts" 
+  			auth="Container" type="javax.sql.DataSource"
+               maxActive="20" maxIdle="5" maxWait="10000"
+               username="guest" password="guest" 
+               driverClassName="com.mysql.jdbc.Driver"
+               url="jdbc:mysql://localhost:3306/my_contacts?useSSL=false"/>
+
+</Context>
