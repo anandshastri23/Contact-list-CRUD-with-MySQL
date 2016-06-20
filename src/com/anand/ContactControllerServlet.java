@@ -47,6 +47,18 @@ public class ContactControllerServlet extends HttpServlet {
 				break;
 			case "list":
 				listContact(request, response);
+				break;
+			case "load":
+				getDetail(request,response);
+				break;
+			case "update":
+				updateDetail(request,response);
+				listContact(request,response);
+				break;
+			case "delete":
+				deleteContact(request,response);
+				listContact(request,response);
+				break;
 			default:
 				listContact(request, response);
 			}
@@ -55,6 +67,33 @@ public class ContactControllerServlet extends HttpServlet {
 			throw new ServletException(exe);
 		}	
 
+	}
+
+	private void deleteContact(HttpServletRequest request, HttpServletResponse response)throws Exception {
+		String id = request.getParameter("contactId");	
+		contactDBUtil.deleteContact(id, dataSource);
+	}
+
+	private void updateDetail(HttpServletRequest request, HttpServletResponse response)throws Exception {
+		String firstName= request.getParameter("firstName");
+		String lastName= request.getParameter("lastName");
+		String contactNumber= request.getParameter("contactNumber");
+		String emailId= request.getParameter("emailId");
+		String sid = request.getParameter("id");
+		int id = Integer.parseInt(sid);
+		Contact contact = new Contact(id,firstName, lastName, contactNumber, emailId);
+		request.setAttribute("contact", contact);
+
+		contactDBUtil.updateContact(contact, dataSource);
+		
+	}
+
+	private void getDetail(HttpServletRequest request,	HttpServletResponse response) throws Exception{
+		String id = request.getParameter("contactId");
+		Contact contact = contactDBUtil.getContact(id, dataSource);
+		request.setAttribute("contact", contact);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/Update-Contact.jsp");
+		dispatcher.forward(request, response);
 	}
 
 	private void addContact(HttpServletRequest request, HttpServletResponse response)throws Exception {		

@@ -32,14 +32,30 @@
 					<th>Last Name</th>
 					<th>Contact Number</th>
 					<th>Email Id</th>
+					<th>Action</th>
 				</tr>
 			
 			<c:forEach var="tempContact" items="${contacts }">
+			<!-- for update -->
+				<c:url var="templink" value="ContactControllerServlet">
+					<c:param name="hidden" value="load"/>
+					<c:param name="contactId" value="${tempContact.id}"/>
+				</c:url>
+			<!-- for delete -->
+				<c:url var="deletelink" value="ContactControllerServlet">
+					<c:param name="hidden" value="delete"/>
+					<c:param name="contactId" value="${tempContact.id}"/>
+				</c:url>
 				<tr>
 					<td> ${tempContact.firstName} </td>
 					<td> ${tempContact.lastName} </td>
 					<td> ${tempContact.contactNumber}</td>
 					<td> ${tempContact.emailId}</td>
+					<td> <a href="${templink}">Update</a> | <a href="${deletelink}"
+							onclick="if(!(confirm('Are you sure you wanna delete this contact')))return false">Delete</a></td>
+					
+					 
+					
 				</tr>
 			</c:forEach>
 		
